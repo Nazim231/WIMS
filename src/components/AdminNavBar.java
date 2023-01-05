@@ -11,11 +11,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import custom_classes.Theme;
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
+import models.MenuItemModel;
 import net.miginfocom.swing.MigLayout;
 
 public class AdminNavBar extends JPanel {
@@ -51,6 +56,25 @@ public class AdminNavBar extends JPanel {
         header.add(appSecondName, "gaptop 20, gapbottom 20");
 
         // Menu
+        MenuList menu = new MenuList();
+        menu.addItem(new MenuItemModel("Dashboard", GoogleMaterialDesignIcons.DASHBOARD));
+        menu.addItem(new MenuItemModel("Shops", GoogleMaterialDesignIcons.STORE));
+        menu.addItem(new MenuItemModel("Employees", FontAwesome.USERS));
+        menu.addItem(new MenuItemModel("Categories", FontAwesome.LIST));
+        menu.addItem(new MenuItemModel("Stocks", FontAwesome.DROPBOX));
+
+        // Default Selected Index
+        System.out.println(menu.getSelectedIndex());
+
+        menu.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting())
+                    System.out.println("Selected Index: " + menu.getSelectedIndex());
+            }
+        });
+
+        add(menu, "width 100%, wrap");
 
         // Close Button
         JButton button = new JButton("Exit");
