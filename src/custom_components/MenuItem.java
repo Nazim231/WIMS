@@ -5,22 +5,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import custom_classes.Theme;
-import jiconfont.icons.font_awesome.FontAwesome;
-import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
-import jiconfont.swing.IconFontSwing;
 import models.MenuItemModel;
 import net.miginfocom.swing.MigLayout;
 
 public class MenuItem extends JPanel {
-    
+
     private MenuItemModel item;
     private JLabel itemTitle;
-    private boolean isFAIcon;
     private boolean selected;
 
     public MenuItem(MenuItemModel item) {
@@ -37,13 +33,10 @@ public class MenuItem extends JPanel {
         itemTitle = new JLabel(item.getTitle());
         itemTitle.setFont(Theme.normalFont);
         itemTitle.setForeground(Color.WHITE);
-        
         // Menu Item Icon
-        isFAIcon = item.getFIcon() != null;      // checking type of icon
-        IconFontSwing.register(isFAIcon ? FontAwesome.getIconFont() : GoogleMaterialDesignIcons.getIconFont());     // registering font based on icon type
-        Icon icon = IconFontSwing.buildIcon(isFAIcon ? item.getFIcon() : item.getGIcon(), 24, Color.WHITE);
+        ImageIcon icon = new ImageIcon(getClass().getResource(item.getIconLocation()));
         itemTitle.setIcon(icon);
-
+        itemTitle.setIconTextGap(10);
         add(itemTitle);
     }
 

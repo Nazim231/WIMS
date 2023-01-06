@@ -1,37 +1,24 @@
 package models;
 
-import jiconfont.icons.font_awesome.FontAwesome;
-import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
-
 public class MenuItemModel {
 
     String title;
-    FontAwesome FIcon;
-    GoogleMaterialDesignIcons GIcon;
+    String iconLocation;
 
     public MenuItemModel(String title) {
         this.title = title;
     }
 
-    public MenuItemModel(String title, FontAwesome icon) {
+    public MenuItemModel(String title, String iconLocation) {
         this.title = title;
-        this.FIcon = icon;
-    }
-
-    public MenuItemModel(String title, GoogleMaterialDesignIcons icon) {
-        this.title = title;
-        this.GIcon = icon;
+        this.iconLocation = iconLocation;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public FontAwesome getFIcon() {
-        return FIcon;
-    }
-
-    public GoogleMaterialDesignIcons getGIcon() {
-        return GIcon;
+    public String getIconLocation() {
+        return iconLocation;
     }
 }

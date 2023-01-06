@@ -19,8 +19,6 @@ import javax.swing.JLabel;
 
 import custom_classes.Theme;
 import custom_components.MenuList;
-import jiconfont.icons.font_awesome.FontAwesome;
-import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import models.MenuItemModel;
 import net.miginfocom.swing.MigLayout;
 
@@ -59,11 +57,11 @@ public class AdminNavBar extends JPanel {
 
         // Menu
         menu = new MenuList();
-        menu.addItem(new MenuItemModel("Dashboard", GoogleMaterialDesignIcons.DASHBOARD));
-        menu.addItem(new MenuItemModel("Shops", GoogleMaterialDesignIcons.STORE));
-        menu.addItem(new MenuItemModel("Employees", FontAwesome.USERS));
-        menu.addItem(new MenuItemModel("Categories", FontAwesome.LIST));
-        menu.addItem(new MenuItemModel("Stocks", FontAwesome.DROPBOX));
+        menu.addItem(new MenuItemModel("Dashboard", "/icons/ic_dashboard.png"));
+        menu.addItem(new MenuItemModel("Shops", "/icons/ic_shop.png"));
+        menu.addItem(new MenuItemModel("Employees", "/icons/ic_employees.png"));
+        menu.addItem(new MenuItemModel("Categories", "/icons/ic_categories.png"));
+        menu.addItem(new MenuItemModel("Stocks", "/icons/ic_stock.png"));
 
         // TODO : Make "Dashboard" menu item selected as default
 
