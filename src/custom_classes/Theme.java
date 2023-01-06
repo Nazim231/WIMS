@@ -22,12 +22,17 @@ public class Theme {
     public static final Color TITLE_COLOR = new Color(100, 100, 100);
     public static final Color LOGIN_TF_COLOR = new Color(214, 225, 250);
     public static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
+    public static final Color MUTED_TEXT_COLOR = new Color(100, 100, 100);
+    public static final Color SUCCESS_COLOR = new Color(14, 120, 47);
+    public static final Color WARNING_COLOR  =new Color(240, 111, 39);
 
     // Fonts
     public static final Font titleFont = new Font("Poppins SemiBold", 0, 24);
     public static final Font buttonFont = new Font("Poppins Medium", 0, 14);
     public static final Font normalFont = new Font("Poppins", 0, 14);
+    public static final Font headerFont = new Font("Lato", 0, 14);
     public static final Font btnLoginFont = new Font("Poppins Medium", 0, 18);
+    public static final Font counterFont = new Font("Lato Bold", 0, 40);
     // App Name Typography Fonts
     public static final Font sideNavHeaderFirstFont = new Font("Lato Light", 0, 28);
     public static final Font sideNavHeaderSecondFont = new Font("Lato Bold", 0, 28);

@@ -1,4 +1,4 @@
-package components;
+package custom_components;
 
 import java.awt.Component;
 import java.awt.event.MouseAdapter;

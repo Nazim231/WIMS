@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import custom_classes.Theme;
+import custom_components.MenuList;
 import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import models.MenuItemModel;
@@ -28,6 +29,7 @@ public class AdminNavBar extends JPanel {
     JPanel header;
     JLabel appFirstName;
     JLabel appSecondName;
+    MenuList menu;
 
     private int x;
     private int y;
@@ -56,21 +58,21 @@ public class AdminNavBar extends JPanel {
         header.add(appSecondName, "gaptop 20, gapbottom 20");
 
         // Menu
-        MenuList menu = new MenuList();
+        menu = new MenuList();
         menu.addItem(new MenuItemModel("Dashboard", GoogleMaterialDesignIcons.DASHBOARD));
         menu.addItem(new MenuItemModel("Shops", GoogleMaterialDesignIcons.STORE));
         menu.addItem(new MenuItemModel("Employees", FontAwesome.USERS));
         menu.addItem(new MenuItemModel("Categories", FontAwesome.LIST));
         menu.addItem(new MenuItemModel("Stocks", FontAwesome.DROPBOX));
 
-        // Default Selected Index
-        System.out.println(menu.getSelectedIndex());
+        // TODO : Make "Dashboard" menu item selected as default
 
         menu.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting())
+                if (!e.getValueIsAdjusting()) {
                     System.out.println("Selected Index: " + menu.getSelectedIndex());
+                }
             }
         });
 
@@ -85,10 +87,11 @@ public class AdminNavBar extends JPanel {
                 System.exit(0);
             }
         });
-        add(button, "width 100%, al center bottom");
+        add(button, "width 100%, gaptop 10, al center bottom");
 
     }
 
+    // Function to change the location of App by draggin it
     public void initMoving(JFrame frame) {
         header.addMouseListener(new MouseAdapter() {
             @Override

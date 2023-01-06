@@ -1,9 +1,8 @@
 package app;
 
-import java.awt.Color;
-
 import javax.swing.JLayeredPane;
 
+import admin.Dashboard;
 import components.AdminNavBar;
 import components.MainPanel;
 import custom_classes.Theme;
@@ -39,18 +38,14 @@ public class Main extends javax.swing.JFrame {
             AdminNavBar navBar = new AdminNavBar();
             navBar.initMoving(Main.this);
             bg.add(navBar, "width 260, height 100%");
-        } else {    // Employee Panel
+        } else { // Employee Panel
             System.out.println("Other");
         }
 
         // Right Panel
-        // JLayeredPane panel = new JLayeredPane();
-        // panel.setOpaque(true);
-        // panel.setBackground(Theme.BG_COLOR);
         MainPanel panel = new MainPanel();
-        panel.setBackground(Color.BLUE);
         bg.add(panel, "width 100% - 260, height 100%");
-
+        panel.add(new Dashboard(), "width 100%, height 100%");
     }
 
     public static void main(String args[]) {
