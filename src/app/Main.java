@@ -2,7 +2,8 @@ package app;
 
 import javax.swing.JLayeredPane;
 
-import admin.Dashboard;
+// import admin.Dashboard;
+import admin.Shops;
 import components.AdminNavBar;
 import components.MainPanel;
 import custom_classes.Theme;
@@ -14,10 +15,10 @@ public class Main extends javax.swing.JFrame {
 
     public Main(String role) {
         this.role = role;
-        initializeDashboard();
+        initMain();
     }
 
-    private void initializeDashboard() {
+    private void initMain() {
         // Frame Properties
         setPreferredSize(Theme.FRAME_SIZE);
         setSize(getPreferredSize());
@@ -45,7 +46,7 @@ public class Main extends javax.swing.JFrame {
         // Right Panel
         MainPanel panel = new MainPanel();
         bg.add(panel, "width 100% - 260, height 100%");
-        panel.add(new Dashboard(), "width 100%, height 100%");
+        panel.add(new Shops(), "width 100%, height 100%");
     }
 
     public static void main(String args[]) {

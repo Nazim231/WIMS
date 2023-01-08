@@ -19,8 +19,7 @@ public class Theme {
     public static final Color PRIMARY = new Color(51, 111, 246);
     public static final Color SECONDARY = new Color(5, 65, 203);
     public static final Color BG_COLOR = new Color(230, 230, 230);
-    public static final Color TITLE_COLOR = new Color(100, 100, 100);
-    public static final Color LOGIN_TF_COLOR = new Color(214, 225, 250);
+    public static final Color LOGIN_TF_COLOR = new Color(160,189,255);
     public static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
     public static final Color MUTED_TEXT_COLOR = new Color(100, 100, 100);
     public static final Color SUCCESS_COLOR = new Color(14, 120, 47);

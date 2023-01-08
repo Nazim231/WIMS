@@ -88,8 +88,7 @@ public class Login extends javax.swing.JFrame {
         loginForm = new LoginForm();
         bg.add(loginForm, "pos 0.5al 0 n 100%, width 50%");
 
-        // Application Starting Animation
-        startingAnimation();
+        startingAnimation(); // starting app animation
 
         // Login Action
         loginForm.btnLoginActionListener(new ActionListener() {
@@ -134,8 +133,8 @@ public class Login extends javax.swing.JFrame {
 
     }
 
+    // function for app opening animation
     private void startingAnimation() {
-        // Application Starting Animation
         TimingTarget target;
         target = new TimingTargetAdapter() {
             @Override
@@ -143,13 +142,13 @@ public class Login extends javax.swing.JFrame {
                 float fractionPanel = 0.5f - fraction;
                 float fractionForm = 0.5f + fraction;
                 // Panel Animation
-                if (fractionPanel >= -0.05f)
+                if (fractionPanel >= -0.05f) // sliding left panel to left side
                     layout.setComponentConstraints(leftPanel, "width 50%, pos " + fractionPanel + "al 0 n 100%");
 
                 // Form Animation
-                if (fractionForm <= 1f) {
+                if (fractionForm <= 1f) // sliding right panel to right side
                     layout.setComponentConstraints(loginForm, "width 50%, pos " + fractionForm + "al 0 n 100%");
-                }
+
                 bg.revalidate();
             };
         };

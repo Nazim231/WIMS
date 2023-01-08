@@ -2,27 +2,28 @@ package components;
 
 import java.awt.event.ActionListener;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
+import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import custom_classes.Theme;
+import custom_components.WButton;
+import custom_components.WPasswordField;
+import custom_components.WTextField;
+import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
+import jiconfont.swing.IconFontSwing;
 import net.miginfocom.swing.MigLayout;
-
-/*
- * TODO : Change EXIT button from Button to ImageButton
- */
 
 public class LoginForm extends JPanel {
 
     JLabel lblTitle, lblUsername, lblPassword;
-    JTextField txtUsername;
-    JPasswordField txtPassword;
-    JButton btnLogin, btnExit;
+    WTextField txtUsername;
+    WPasswordField txtPassword;
+    WButton btnLogin, btnExit;
     JPanel formPanel;
 
     // Default Contructor
@@ -32,22 +33,29 @@ public class LoginForm extends JPanel {
 
     // Form Initialization function
     public void initializeForm() {
-        
+
         // Panel Properties
         setLayout(new MigLayout("fillx"));
         setBackground(Theme.BG_COLOR);
 
+        // Exit Button Icon
+        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
+        Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.CLOSE, 28, Theme.PRIMARY);
         // Exit Button
-        btnExit = new JButton("Exit");
+        btnExit = new WButton();
+        btnExit.setIcon(icon);
+        btnExit.setBorder(new EmptyBorder(5, 5, 5, 5));
         btnExit.setFont(Theme.normalFont);
-        btnExit.addActionListener(new ActionListener() {
+        btnExit.setBgColor(Theme.TRANSPARENT_COLOR);
+        btnExit.setCornerRadius(128);
+        btnExit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnExit.addActionListener(new ActionListener() {    // Action to perform on click of exit
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
         add(btnExit, "al right top, wrap");
-
 
         // Form Panel
         formPanel = new JPanel(new MigLayout("al center center"));
@@ -57,35 +65,38 @@ public class LoginForm extends JPanel {
         // Title
         lblTitle = new JLabel("Login");
         lblTitle.setFont(Theme.titleFont);
-        lblTitle.setForeground(Theme.TITLE_COLOR);
+        lblTitle.setForeground(Theme.MUTED_TEXT_COLOR);
         formPanel.add(lblTitle, "center, wrap");
 
         // Username
         lblUsername = new JLabel("Username");
         lblUsername.setFont(Theme.normalFont);
+        lblUsername.setForeground(Theme.MUTED_TEXT_COLOR);
         formPanel.add(lblUsername, "wrap, gapy 10");
 
-        txtUsername = new JTextField();
-        txtUsername.setFont(Theme.normalFont);
-        txtUsername.setBackground(Theme.LOGIN_TF_COLOR);
+        txtUsername = new WTextField();
+        txtUsername.setBgColor(Theme.LOGIN_TF_COLOR);
+        txtUsername.setRadius(16);
         formPanel.add(txtUsername, "width 50%, height 40, wrap");
 
         // Password
         lblPassword = new JLabel("Password");
         lblPassword.setFont(Theme.normalFont);
+        lblPassword.setForeground(Theme.MUTED_TEXT_COLOR);
         formPanel.add(lblPassword, "wrap, gapy 5");
 
-        txtPassword = new JPasswordField();
-        txtPassword.setFont(Theme.normalFont);
-        txtPassword.setBackground(Theme.LOGIN_TF_COLOR);
+        txtPassword = new WPasswordField();
+        txtPassword.setBgColor(Theme.LOGIN_TF_COLOR);
+        txtPassword.setRadius(16);
         formPanel.add(txtPassword, "width 50%, height 40, wrap");
 
         // Login Button
-        btnLogin = new JButton("Login");
+        btnLogin = new WButton("Login");
         btnLogin.setFont(Theme.btnLoginFont);
-        btnLogin.setBackground(Theme.PRIMARY);
+        btnLogin.setBgColor(Theme.PRIMARY);
         btnLogin.setForeground(Color.WHITE);
-        formPanel.add(btnLogin, "center, width 150, height 50, gapy 10");
+        btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        formPanel.add(btnLogin, "center, width 100, gapy 10");
     }
 
     public String getUsername() {
@@ -99,6 +110,5 @@ public class LoginForm extends JPanel {
     public void btnLoginActionListener(ActionListener actionListener) {
         btnLogin.addActionListener(actionListener);
     }
-
 
 }

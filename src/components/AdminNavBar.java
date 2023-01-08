@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.GradientPaint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,12 +14,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import custom_classes.Theme;
 import custom_components.MenuList;
+import custom_components.WButton;
 import models.MenuItemModel;
 import net.miginfocom.swing.MigLayout;
 
@@ -77,15 +78,18 @@ public class AdminNavBar extends JPanel {
         add(menu, "width 100%, wrap");
 
         // Close Button
-        JButton button = new JButton("Exit");
-        button.setFont(Theme.normalFont);
-        button.addActionListener(new ActionListener() {
+        WButton btnClose = new WButton("Exit");
+        btnClose.setFont(Theme.normalFont);
+        btnClose.setBgColor(Theme.PRIMARY);
+        btnClose.setForeground(Color.WHITE);
+        btnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnClose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 System.exit(0);
             }
         });
-        add(button, "width 100%, gaptop 10, al center bottom");
+        add(btnClose, "width 240, gaptop 10, pos 0.5al 1al");
 
     }
 
