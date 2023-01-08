@@ -1,18 +1,43 @@
 package components;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.GradientPaint;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import custom_classes.Theme;
+import net.miginfocom.swing.MigLayout;
 
 public class LoginLeftPanel extends JPanel {
 
+    JPanel header;
+    JLabel appFirstName, appSecondName, slogan;
+
     public LoginLeftPanel() {
         setOpaque(false);
+        setLayout(new MigLayout("al center center, gap 0"));
+
+        header = new JPanel(new MigLayout("gap 0"));
+        header.setBackground(Theme.TRANSPARENT_COLOR);
+        add(header, "pos 0.5al 0.49al, wrap");
+        appFirstName = new JLabel("The Wi");
+        appFirstName.setForeground(Color.WHITE);
+        appFirstName.setFont(Theme.sideNavHeaderFirstFont);
+        header.add(appFirstName);
+
+        appSecondName = new JLabel("MS");
+        appSecondName.setForeground(Color.WHITE);
+        appSecondName.setFont(Theme.sideNavHeaderSecondFont);
+        header.add(appSecondName);
+
+        slogan = new JLabel("Manage your warehouse inventory easily");
+        slogan.setFont(Theme.headerFont);
+        slogan.setForeground(Color.WHITE);
+        add(slogan, "gaptop 45");
     }
 
     // Making Gradient Background

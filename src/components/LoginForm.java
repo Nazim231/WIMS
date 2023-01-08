@@ -95,7 +95,7 @@ public class LoginForm extends JPanel {
 
         // Login Button
         btnLogin = new WButton("Login");
-        btnLogin.setFont(Theme.btnLoginFont);
+        btnLogin.setFont(Theme.normalFont);
         btnLogin.setBgColor(Theme.PRIMARY);
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
