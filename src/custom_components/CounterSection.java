@@ -30,6 +30,7 @@ public class CounterSection extends RoundedCornerPanel {
     }
 
     private void init() {
+        setBgColor(Color.WHITE);
         setCornerRadius(32);
         setLayout(new MigLayout("insets 20, gap 0"));
 

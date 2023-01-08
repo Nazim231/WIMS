@@ -6,7 +6,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
 import org.jdesktop.animation.timing.Animator;
@@ -17,6 +16,7 @@ import components.LoginForm;
 import components.LoginLeftPanel;
 import custom_classes.DBQueries;
 import custom_classes.Theme;
+import custom_components.RoundedCornerPanel;
 import models.UserDetails;
 import custom_classes.EncryptPassword;
 import custom_classes.Results;
@@ -27,7 +27,7 @@ public class Login extends javax.swing.JFrame {
     LoginLeftPanel leftPanel;
     LoginForm loginForm;
     MigLayout layout;
-    JLayeredPane bg;
+    RoundedCornerPanel bg;
 
     // Default Constructor
     public Login() {
@@ -72,7 +72,7 @@ public class Login extends javax.swing.JFrame {
         JFrame context = this;
 
         // Background
-        bg = new JLayeredPane();
+        bg = new RoundedCornerPanel();
         layout = new MigLayout("insets 0");
         bg.setLayout(layout);
         bg.setOpaque(true);
@@ -142,7 +142,7 @@ public class Login extends javax.swing.JFrame {
                 float fractionPanel = 0.5f - fraction;
                 float fractionForm = 0.5f + fraction;
                 // Panel Animation
-                if (fractionPanel >= -0.05f) // sliding left panel to left side
+                if (fractionPanel >= 0f) // sliding left panel to left side
                     layout.setComponentConstraints(leftPanel, "width 50%, pos " + fractionPanel + "al 0 n 100%");
 
                 // Form Animation

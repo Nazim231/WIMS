@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -29,7 +28,7 @@ public class Shops extends JPanel {
 
     private void init() {
         // JPanel Properties
-        layout = new MigLayout("debug, fillx");
+        layout = new MigLayout("fillx");
         setLayout(layout);
         setOpaque(false);
 
@@ -44,7 +43,7 @@ public class Shops extends JPanel {
         btnAddShop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(Shops.this, "Add Shop Button");
+                // Open Add Shop Page
             }
         });
 

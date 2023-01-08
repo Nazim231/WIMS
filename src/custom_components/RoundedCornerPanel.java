@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 public class RoundedCornerPanel extends JPanel {
 
-    private Color bgColor = Color.WHITE;
     private int cornerRadius = 16;
 
     public RoundedCornerPanel() {
@@ -17,8 +16,7 @@ public class RoundedCornerPanel extends JPanel {
     }
 
     public void setBgColor(Color bgColor) {
-        this.bgColor = bgColor;
-        repaint();
+        setBackground(bgColor);
     }
 
     public void setCornerRadius(int cornerRadius) {
@@ -30,7 +28,7 @@ public class RoundedCornerPanel extends JPanel {
     protected void paintChildren(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setPaint(bgColor);
+        g2d.setPaint(getBackground());
         g2d.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
         super.paintChildren(g);
     }

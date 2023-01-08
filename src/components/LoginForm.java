@@ -3,6 +3,8 @@ package components;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Icon;
@@ -35,6 +37,7 @@ public class LoginForm extends JPanel {
     public void initializeForm() {
 
         // Panel Properties
+        setOpaque(false);
         setLayout(new MigLayout("fillx"));
         setBackground(Theme.BG_COLOR);
 
@@ -111,4 +114,12 @@ public class LoginForm extends JPanel {
         btnLogin.addActionListener(actionListener);
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 32, 32);
+        g2.fillRect(0, 0, getWidth() - 32, getHeight());
+        super.paintComponent(g);
+    }
 }

@@ -78,7 +78,7 @@ public class AdminNavBar extends JPanel {
         add(menu, "width 100%, wrap");
 
         // Close Button
-        WButton btnClose = new WButton("Exit");
+        WButton btnClose = new WButton("EXIT");
         btnClose.setFont(Theme.normalFont);
         btnClose.setBgColor(Theme.PRIMARY);
         btnClose.setForeground(Color.WHITE);

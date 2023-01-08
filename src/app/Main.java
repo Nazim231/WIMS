@@ -50,6 +50,18 @@ public class Main extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if (info.getName().equals("Nimbus")) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Fook & Feel Exception: " + ex);
+        }
+
         new Main("admin").setVisible(true);
     }
 }
