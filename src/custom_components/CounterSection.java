@@ -55,13 +55,13 @@ public class CounterSection extends RoundedCornerPanel {
         lblCounter = new JLabel(count);
         lblCounter.setHorizontalAlignment(SwingConstants.RIGHT);
         lblCounter.setForeground(counterColor);
-        lblCounter.setFont(Theme.counterFont);
+        lblCounter.setFont(Theme.latoBoldBiggerFont);
         right.add(lblCounter, "width 100%, wrap");
 
         // Desc Line
         lblDesc = new JLabel(desc);
         lblDesc.setHorizontalAlignment(SwingConstants.RIGHT);
-        lblDesc.setFont(Theme.normalFont);
+        lblDesc.setFont(Theme.poppinsFont);
         lblDesc.setBorder(new EmptyBorder(0, 1, 0, 4));
         lblDesc.setForeground(Theme.MUTED_TEXT_COLOR);
         right.add(lblDesc, "width 100%");

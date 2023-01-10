@@ -31,7 +31,7 @@ public class MenuItem extends JPanel {
 
         // Menu Item Name
         itemTitle = new JLabel(item.getTitle());
-        itemTitle.setFont(Theme.normalFont);
+        itemTitle.setFont(Theme.poppinsFont);
         itemTitle.setForeground(Color.WHITE);
         // Menu Item Icon
         ImageIcon icon = new ImageIcon(getClass().getResource(item.getIconLocation()));

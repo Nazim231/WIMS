@@ -112,7 +112,7 @@ public class WButton extends JButton {
         }
 
         // Hover and Click Effect
-        if (getModel().isRollover()) {
+        if (getModel().isRollover() || isFocusOwner()) {
             g2.setColor(new Color(0, 0, 0, 20));
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
         }

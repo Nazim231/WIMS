@@ -19,7 +19,7 @@ public class WPasswordField extends JPasswordField {
         setBorder(new EmptyBorder(10, 10, 10, 10));
         setBackground(Theme.TRANSPARENT_COLOR);
         setForeground(Theme.TEXT_COLOR);
-        setFont(Theme.headerFont);
+        setFont(Theme.latoFont);
     }
 
     public void setRadius(int radius) {

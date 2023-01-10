@@ -36,7 +36,7 @@ public class Dashboard extends JPanel {
         // User Good Name
         String userName = "John Doe";   // TODO : Change "John Doe" to User Real Name
         lblUserGoodName = new JLabel("Hello, " + userName);
-        lblUserGoodName.setFont(Theme.headerFont);
+        lblUserGoodName.setFont(Theme.latoFont);
         lblUserGoodName.setForeground(Color.BLACK);
         headerPanel.add(lblUserGoodName);
         // TODO : Add Profile Icon

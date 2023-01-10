@@ -48,12 +48,12 @@ public class AdminNavBar extends JPanel {
 
         appFirstName = new JLabel("The Wi");
         appFirstName.setForeground(Color.WHITE);
-        appFirstName.setFont(Theme.sideNavHeaderFirstFont);
+        appFirstName.setFont(Theme.latoHeadlineLightFont);
         header.add(appFirstName, "gaptop 20, gapbottom 20");
 
         appSecondName = new JLabel("MS");
         appSecondName.setForeground(Color.WHITE);
-        appSecondName.setFont(Theme.sideNavHeaderSecondFont);
+        appSecondName.setFont(Theme.latoHeadlineBoldFont);
         header.add(appSecondName, "gaptop 20, gapbottom 20");
 
         // Menu
@@ -79,7 +79,7 @@ public class AdminNavBar extends JPanel {
 
         // Close Button
         WButton btnClose = new WButton("EXIT");
-        btnClose.setFont(Theme.normalFont);
+        btnClose.setFont(Theme.poppinsFont);
         btnClose.setBgColor(Theme.PRIMARY);
         btnClose.setForeground(Color.WHITE);
         btnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));

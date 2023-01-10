@@ -48,7 +48,7 @@ public class LoginForm extends JPanel {
         btnExit = new WButton();
         btnExit.setIcon(icon);
         btnExit.setBorder(new EmptyBorder(5, 5, 5, 5));
-        btnExit.setFont(Theme.normalFont);
+        btnExit.setFont(Theme.poppinsFont);
         btnExit.setBgColor(Theme.TRANSPARENT_COLOR);
         btnExit.setCornerRadius(128);
         btnExit.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -67,36 +67,36 @@ public class LoginForm extends JPanel {
 
         // Title
         lblTitle = new JLabel("Login");
-        lblTitle.setFont(Theme.titleFont);
+        lblTitle.setFont(Theme.poppinsSemiboldTitleFont);
         lblTitle.setForeground(Theme.MUTED_TEXT_COLOR);
         formPanel.add(lblTitle, "center, wrap");
 
         // Username
         lblUsername = new JLabel("Username");
-        lblUsername.setFont(Theme.normalFont);
+        lblUsername.setFont(Theme.poppinsFont);
         lblUsername.setForeground(Theme.MUTED_TEXT_COLOR);
         formPanel.add(lblUsername, "wrap, gapy 10");
 
         txtUsername = new WTextField();
-        txtUsername.setBgColor(Theme.LOGIN_TF_COLOR);
+        txtUsername.setBgColor(Theme.TF_COLOR);
         txtUsername.setRadius(16);
         formPanel.add(txtUsername, "width 50%, height 40, wrap");
 
         // Password
         lblPassword = new JLabel("Password");
-        lblPassword.setFont(Theme.normalFont);
+        lblPassword.setFont(Theme.poppinsFont);
         lblPassword.setForeground(Theme.MUTED_TEXT_COLOR);
         formPanel.add(lblPassword, "wrap, gapy 5");
 
         txtPassword = new WPasswordField();
         txtPassword.setEchoChar('•');
-        txtPassword.setBgColor(Theme.LOGIN_TF_COLOR);
+        txtPassword.setBgColor(Theme.TF_COLOR);
         txtPassword.setRadius(16);
         formPanel.add(txtPassword, "width 50%, height 40, wrap");
 
         // Login Button
         btnLogin = new WButton("Login");
-        btnLogin.setFont(Theme.normalFont);
+        btnLogin.setFont(Theme.poppinsFont);
         btnLogin.setBgColor(Theme.PRIMARY);
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));

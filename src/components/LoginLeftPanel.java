@@ -27,16 +27,16 @@ public class LoginLeftPanel extends JPanel {
         add(header, "center, wrap");
         appFirstName = new JLabel("The Wi");
         appFirstName.setForeground(Color.WHITE);
-        appFirstName.setFont(Theme.sideNavHeaderFirstFont);
+        appFirstName.setFont(Theme.latoHeadlineLightFont);
         header.add(appFirstName);
 
         appSecondName = new JLabel("MS");
         appSecondName.setForeground(Color.WHITE);
-        appSecondName.setFont(Theme.sideNavHeaderSecondFont);
+        appSecondName.setFont(Theme.latoHeadlineBoldFont);
         header.add(appSecondName);
 
         slogan = new JLabel("Manage your warehouse inventory easily");
-        slogan.setFont(Theme.headerFont);
+        slogan.setFont(Theme.latoFont);
         slogan.setForeground(Color.WHITE);
         add(slogan);
     }

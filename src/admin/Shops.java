@@ -11,9 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import custom_classes.DBQueries;
 import custom_classes.Theme;
 import custom_components.WButton;
+import custom_components.WTable;
 import net.miginfocom.swing.MigLayout;
 
 public class Shops extends JPanel {
@@ -21,9 +24,20 @@ public class Shops extends JPanel {
     MigLayout layout;
     WButton btnAddShop;
     JLabel lblTitle;
+    WTable shopsTable;
 
     public Shops() {
         init();
+        // Setting Shops List to Shops Table
+        DefaultTableModel tableModel = DBQueries.getShopsList();
+        if (tableModel != null)
+            shopsTable.setModel(tableModel);
+        else {
+            String[] cols = {"ID", "Employee ID", "Shop Name", "Shop Address"};
+            tableModel = new DefaultTableModel(cols, 0);
+            shopsTable.setModel(tableModel);
+        }
+
     }
 
     private void init() {
@@ -34,7 +48,7 @@ public class Shops extends JPanel {
 
         // Add Button to Add Shops
         btnAddShop = new WButton("Add Shop");
-        btnAddShop.setFont(Theme.headerFont);
+        btnAddShop.setFont(Theme.latoFont);
         btnAddShop.setBgColor(Theme.PRIMARY);
         btnAddShop.setForeground(Color.WHITE);
         add(btnAddShop, "height 40, gaptop 10, al right center, wrap");
@@ -44,21 +58,20 @@ public class Shops extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Open Add Shop Page
+                AddShopPage addShopPage = new AddShopPage();
+                addShopPage.setVisible(true);
             }
         });
 
         // Title
         lblTitle = new JLabel("Shops");
-        lblTitle.setFont(Theme.titleFont);
+        lblTitle.setFont(Theme.poppinsSemiboldTitleFont);
         lblTitle.setForeground(Theme.MUTED_TEXT_COLOR);
         add(lblTitle, "gaptop 5, wrap");
 
         // Shops List Table
-        String columns[] = { "ID", "EMPLOYEE ID", "SHOP NAME", "SHOP ADDRESS" };
-        String data[][] = {
-                { "1", "143", "Storesy", "Mumbai" },
-        };
-        JTable shopsTable = new JTable(data, columns);
+
+        shopsTable = new WTable();
         shopsTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         JScrollPane tableContainer = new JScrollPane(shopsTable);
         add(tableContainer, "width 100%, height 250, wrap");
