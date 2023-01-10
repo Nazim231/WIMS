@@ -89,6 +89,7 @@ public class LoginForm extends JPanel {
         formPanel.add(lblPassword, "wrap, gapy 5");
 
         txtPassword = new WPasswordField();
+        txtPassword.setEchoChar('•');
         txtPassword.setBgColor(Theme.LOGIN_TF_COLOR);
         txtPassword.setRadius(16);
         formPanel.add(txtPassword, "width 50%, height 40, wrap");

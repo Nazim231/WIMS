@@ -23,7 +23,8 @@ public class LoginLeftPanel extends JPanel {
 
         header = new JPanel(new MigLayout("gap 0"));
         header.setBackground(Theme.TRANSPARENT_COLOR);
-        add(header, "pos 0.5al 0.49al, wrap");
+        // add(header, "pos 0.5al 0.49al, wrap");
+        add(header, "center, wrap");
         appFirstName = new JLabel("The Wi");
         appFirstName.setForeground(Color.WHITE);
         appFirstName.setFont(Theme.sideNavHeaderFirstFont);
@@ -37,7 +38,7 @@ public class LoginLeftPanel extends JPanel {
         slogan = new JLabel("Manage your warehouse inventory easily");
         slogan.setFont(Theme.headerFont);
         slogan.setForeground(Color.WHITE);
-        add(slogan, "gaptop 45");
+        add(slogan);
     }
 
     // Making Gradient Background

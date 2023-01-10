@@ -153,7 +153,7 @@ public class Login extends javax.swing.JFrame {
             };
         };
 
-        Animator animator = new Animator(1000, target);
+        Animator animator = new Animator(1500, target);
         animator.setResolution(0);
 
         // Delay animation for some time
@@ -163,7 +163,7 @@ public class Login extends javax.swing.JFrame {
                 if (!animator.isRunning())
                     animator.start();
             }
-        }, 200);
+        }, 500);
     }
 
 }

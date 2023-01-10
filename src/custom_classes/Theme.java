@@ -22,6 +22,7 @@ public class Theme {
     public static final Color LOGIN_TF_COLOR = new Color(160,189,255);
     public static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
     public static final Color MUTED_TEXT_COLOR = new Color(100, 100, 100);
+    public static final Color TEXT_COLOR = new Color(31, 31, 31);
     public static final Color SUCCESS_COLOR = new Color(14, 120, 47);
     public static final Color WARNING_COLOR  =new Color(240, 111, 39);
 

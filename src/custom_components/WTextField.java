@@ -18,6 +18,7 @@ public class WTextField extends JTextField{
     public WTextField() {
         setBorder(new EmptyBorder(10, 10, 10, 10));
         setBackground(Theme.TRANSPARENT_COLOR);
+        setForeground(Theme.TEXT_COLOR);
         setFont(Theme.headerFont);
     }
 
