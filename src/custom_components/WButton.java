@@ -39,7 +39,6 @@ public class WButton extends JButton {
         setRippleColor(RIPPLE_COLOR);
         setContentAreaFilled(false);
 
-        // TODO : Add Hover & Ripple Effect
     }
 
     public void setHover(boolean hover) {
@@ -104,14 +103,23 @@ public class WButton extends JButton {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         boolean containsBorder = borderWidth > 0;
-        g2.setColor(containsBorder ? borderColor : bgColor);
+        g2.setColor(containsBorder ? borderColor : bgColor);    // button contains border then set border color else background color
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
-        if (containsBorder) {
+        if (containsBorder) {   // button contains border then this block will set the background color of button
             g2.setColor(getBgColor());
             g2.fillRoundRect(borderWidth, borderWidth, getWidth() - (borderWidth * 2), getHeight() - (borderWidth * 2),
                     cornerRadius, cornerRadius);
         }
 
+        // Hover and Click Effect
+        if (getModel().isRollover()) {
+            g2.setColor(new Color(0, 0, 0, 20));
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        }
+        if (getModel().isPressed()) {   // added button pressing effect
+            g2.setColor(new Color(255 ,255, 255, 60));
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        }
         super.paintComponent(g);
     }
 
