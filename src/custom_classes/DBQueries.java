@@ -2,6 +2,7 @@ package custom_classes;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,7 @@ public class DBQueries {
 
     private static Connection connection;
     private static Statement statement;
+    private static PreparedStatement pStatement;
     private static ResultSet resultSet;
 
     // Login User
@@ -28,7 +30,7 @@ public class DBQueries {
             return new UserDetails(Results.ERROR);
 
         try {
-            String query = "select * from USERS where USERNAME='" + username + "' and PASSWORD='" + password + "'";
+            String query = "select * from USERS where email='" + username + "' and PASSWORD='" + password + "'";
             resultSet = statement.executeQuery(query);
 
             if (resultSet.next()) {
@@ -70,13 +72,42 @@ public class DBQueries {
                 String rowData[] = { Integer.toString(id), Integer.toString(empID), shopName, shopAddress };
                 tableModel.addRow(rowData);
             }
-
+            closeConnection(true);
             return tableModel;
         } catch (SQLException ex) {
             System.out.println(ex);
             closeConnection(true);
             return null;
         }
+    }
+
+    // function to get all employees
+    public static DefaultTableModel getEmployeesList() {
+
+        if (makeConnection() == Results.ERROR)
+            return null;
+
+        String[] cols = { "ID", "Name", "Email" };
+        DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
+
+        try {
+            String query = "select id, name, email from USERS where role='emp'";
+            resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String rowData[] = { Integer.toString(id), name, email };
+                tableModel.addRow(rowData);
+            }
+            closeConnection(true);
+            return tableModel;
+        } catch(SQLException ex) {
+            System.out.println(ex);
+            closeConnection(true);
+            return null;
+        }
+
     }
 
     // function to add new shop data to DB
@@ -94,6 +125,45 @@ public class DBQueries {
             System.out.println(ex);
             closeConnection(false);
             return Results.ERROR;
+        }
+    }
+
+    // interface to return the Employee Query Execution Status
+    public interface AddingEmployeeStatus {
+        void employeeStatus(int result, String password);
+    }
+
+    // function to add new employee to DB
+    public static void addEmployee(String name, String email, AddingEmployeeStatus queryStatus) {
+        if (makeConnection() == Results.ERROR) {
+            queryStatus.employeeStatus(Results.ERROR, null);
+            return;
+        }
+        try {
+            String query = "insert into USERS(name, email, password, sec_ques, sec_ans, role) VALUES(?, ?, ?, ?, ?, ?)";
+            pStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pStatement.setString(1, name);
+            pStatement.setString(2, email);
+            String plainText = generatePassword(); // Generating Random String(Password)
+            pStatement.setString(3, EncryptPassword.encrypt(plainText));
+            pStatement.setString(4, "What is your Birth Place?");
+            pStatement.setString(5, "Imaginary");
+            pStatement.setString(6, "emp");
+            pStatement.addBatch();
+            pStatement.executeBatch(); // executing Query
+            resultSet = pStatement.getGeneratedKeys(); // fetching PRIMARY KEY value (ID) of employee
+            if (resultSet.next()) { // Employee Created Successfully
+                int id = Integer.parseInt(resultSet.getString(1));
+                closeConnection(true);
+                queryStatus.employeeStatus(id, plainText);
+            } else {
+                closeConnection(true);
+                queryStatus.employeeStatus(Results.FAILED, "");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            closeConnection(false);
+            queryStatus.employeeStatus(Results.ERROR, "");
         }
     }
 
@@ -120,6 +190,22 @@ public class DBQueries {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+    }
+
+    // Generate a Random String(Password) of length 8
+    private static String generatePassword() {
+        int length = 8;
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder sb = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            int index = (int) (AlphaNumericString.length() * Math.random());
+            sb.append(AlphaNumericString.charAt(index));
+        }
+
+        return sb.toString();
     }
 
 }

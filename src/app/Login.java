@@ -34,29 +34,6 @@ public class Login extends javax.swing.JFrame {
         initializeApp();
     }
 
-    public static void main(String args[]) {
-
-        // Setting Nimbus Look & Feel (Theme)
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if (info.getName().equals("Nimbus")) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            System.out.println("Fook & Feel Exception: " + ex);
-        }
-
-        // Displaying Frame
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
-    }
-
     private void initializeApp() {
 
         // Frame Properties
@@ -111,7 +88,7 @@ public class Login extends javax.swing.JFrame {
                 }
 
                 // Encrypting Password
-                password = new EncryptPassword().encrypt(password);
+                password = EncryptPassword.encrypt(password);
 
                 // Attempting Login
                 UserDetails user = DBQueries.loginUser(username, password);
@@ -133,6 +110,29 @@ public class Login extends javax.swing.JFrame {
 
     }
 
+    public static void main(String args[]) {
+
+        // Setting Nimbus Look & Feel (Theme)
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if (info.getName().equals("Nimbus")) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Fook & Feel Exception: " + ex);
+        }
+
+        // Displaying Frame
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Login().setVisible(true);
+            }
+        });
+    }
+    
     // function for app opening animation
     private void startingAnimation() {
         TimingTarget target;

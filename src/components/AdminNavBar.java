@@ -14,6 +14,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import app.Main;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -70,7 +73,7 @@ public class AdminNavBar extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    System.out.println("Selected Index: " + menu.getSelectedIndex());
+                    Main.changeItem(menu.getSelectedIndex());
                 }
             }
         });
@@ -110,6 +113,7 @@ public class AdminNavBar extends JPanel {
             }
         });
     }
+
 
     // Graident Background
     @Override

@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 public class EncryptPassword {
 
 
-    public String encrypt(String text) {
+    public static String encrypt(String text) {
         
         String encryptedText = null;
 

@@ -36,6 +36,7 @@ public class Shops extends JPanel {
             String[] cols = {"ID", "Employee ID", "Shop Name", "Shop Address"};
             tableModel = new DefaultTableModel(cols, 0);
             shopsTable.setModel(tableModel);
+            revalidate();
         }
 
     }
