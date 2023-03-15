@@ -21,7 +21,7 @@ public class RoundedCornerPanel extends JPanel {
 
     public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
-        repaint();
+        // repaint();
     }
 
     @Override

@@ -2,6 +2,7 @@ package app;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
@@ -9,17 +10,19 @@ import admin.*;
 import components.AdminNavBar;
 import components.MainPanel;
 import custom_classes.Theme;
+import custom_components.GlassPanePopup.GlassPane;
 import net.miginfocom.swing.MigLayout;
 
-public class Main extends javax.swing.JFrame {
+public class Main extends JFrame {
 
     String role;
     static MainPanel panel;
     static ArrayList<JPanel> adminComponents = new ArrayList<>(); // To store all Admin Menu Items Panels
-
+    
     public Main(String role) {
         this.role = role;
         initMain();
+        GlassPane.install(this);
     }
 
     private void initMain() {

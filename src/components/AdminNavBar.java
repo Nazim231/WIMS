@@ -67,8 +67,6 @@ public class AdminNavBar extends JPanel {
         menu.addItem(new MenuItemModel("Categories", "/icons/ic_categories.png"));
         menu.addItem(new MenuItemModel("Stocks", "/icons/ic_stock.png"));
 
-        // TODO : Make "Dashboard" menu item selected as default
-
         menu.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {

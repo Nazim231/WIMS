@@ -15,7 +15,7 @@ import models.MenuItemModel;
 public class MenuList extends JList<MenuItemModel> {
 
     private final DefaultListModel<MenuItemModel> model;
-    private int selectedIndex = -1;
+    private int selectedIndex = 0;
 
     public MenuList() {
         model = new DefaultListModel<MenuItemModel>();

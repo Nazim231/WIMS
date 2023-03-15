@@ -17,6 +17,7 @@ import custom_classes.DBQueries;
 import custom_classes.Theme;
 import custom_components.WButton;
 import custom_components.WTable;
+import custom_components.GlassPanePopup.GlassPane;
 import net.miginfocom.swing.MigLayout;
 
 public class Shops extends JPanel {
@@ -33,7 +34,7 @@ public class Shops extends JPanel {
         if (tableModel != null)
             shopsTable.setModel(tableModel);
         else {
-            String[] cols = {"ID", "Employee ID", "Shop Name", "Shop Address"};
+            String[] cols = { "ID", "Employee ID", "Shop Name", "Shop Address" };
             tableModel = new DefaultTableModel(cols, 0);
             shopsTable.setModel(tableModel);
             revalidate();
@@ -59,8 +60,9 @@ public class Shops extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Open Add Shop Page
-                AddShopPage addShopPage = new AddShopPage();
-                addShopPage.setVisible(true);
+                AddShopPage page = new AddShopPage();
+                // TestingPanel page = new TestingPanel();
+                GlassPane.showPopup(page, "Add Shop Page");
             }
         });
 

@@ -18,6 +18,7 @@ import custom_classes.DBQueries;
 import custom_classes.Theme;
 import custom_components.WButton;
 import custom_components.WTable;
+import custom_components.GlassPanePopup.GlassPane;
 import net.miginfocom.swing.MigLayout;
 
 public class Employees extends JPanel {
@@ -54,7 +55,7 @@ public class Employees extends JPanel {
         btnAddEmp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddEmployeePage().setVisible(true);
+                GlassPane.showPopup(new AddEmployeePage());
             }
         });
         add(btnAddEmp, "height 40, gaptop 10, right, wrap");

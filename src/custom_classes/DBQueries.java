@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 import javax.swing.table.DefaultTableModel;
 
+import models.EmployeeDetails;
 import models.UserDetails;
 
 /*
@@ -93,7 +94,7 @@ public class DBQueries {
         try {
             String query = "select id, name, email from USERS where role='emp'";
             resultSet = statement.executeQuery(query);
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
@@ -102,12 +103,39 @@ public class DBQueries {
             }
             closeConnection(true);
             return tableModel;
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println(ex);
             closeConnection(true);
             return null;
         }
 
+    }
+
+    public interface UnAssignedEmployees {
+        void getUnAssignedEmp(int queryStatus, EmployeeDetails details);
+    }
+
+    // function to get employees which aren't assigned to any shop
+    public static void getUnAssignedEmps(UnAssignedEmployees empDetails) {
+
+        if (makeConnection() == Results.ERROR) {
+            empDetails.getUnAssignedEmp(Results.ERROR, null);
+            return;
+        }
+
+        try {
+            String query = "SELECT id, name FROM users WHERE id NOT IN (SELECT emp_id FROM shops) AND role = 'emp'";
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                empDetails.getUnAssignedEmp(
+                        Results.SUCCESS,
+                        new EmployeeDetails(resultSet.getInt("id"), resultSet.getString("name")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            closeConnection(true);
+            empDetails.getUnAssignedEmp(Results.ERROR, null);
+        }
     }
 
     // function to add new shop data to DB

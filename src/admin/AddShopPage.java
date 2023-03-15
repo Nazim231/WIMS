@@ -1,12 +1,12 @@
 package admin;
 
-import java.awt.event.ActionListener;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 import javax.swing.Icon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
@@ -18,14 +18,16 @@ import custom_classes.Theme;
 import custom_components.RoundedCornerPanel;
 import custom_components.WButton;
 import custom_components.WTextField;
+import custom_components.GlassPanePopup.GlassPane;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
 import net.miginfocom.swing.MigLayout;
 
-public class AddShopPage extends JFrame {
+public class AddShopPage extends RoundedCornerPanel {
 
-    JLabel lblTitle, lblSName, lblSAddress, lblEmpID;
-    WTextField shopName, empID;
+    boolean focusGained;
+    JLabel lblTitle, lblSName, lblSAddress, lblSelectEmp;
+    WTextField shopName, employee;
     JTextArea shopAddress;
     WButton btnClose, btnAddShop;
 
@@ -34,18 +36,8 @@ public class AddShopPage extends JFrame {
     }
 
     private void init() {
-        setPreferredSize(new Dimension((int) Theme.FRAME_SIZE.getWidth() - 200, 500));
-        setMinimumSize(getPreferredSize());
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setUndecorated(true);
-        setBackground(Theme.TRANSPARENT_COLOR);
-        setLocationRelativeTo(null);
-
-        RoundedCornerPanel panel = new RoundedCornerPanel();
-        panel.setCornerRadius(16);
-        panel.setBgColor(Theme.BG_COLOR);
-        panel.setLayout(new MigLayout("insets 20, gapx 20, gapy 10"));
-        add(panel);
+        setBgColor(Theme.BG_COLOR);
+        setLayout(new MigLayout("insets 20, gapx 20, gapy 10"));
 
         /*
          * => TODO : Shop CAN'T be added if no employee is selected to manage the shop
@@ -56,7 +48,7 @@ public class AddShopPage extends JFrame {
         lblTitle = new JLabel("Add New Shop");
         lblTitle.setFont(Theme.poppinsSemiboldTitleFont);
         lblTitle.setForeground(Theme.MUTED_TEXT_COLOR);
-        panel.add(lblTitle, "left, gapbottom 30");
+        add(lblTitle, "left, gapbottom 30");
 
         // Close Button
         btnClose = new WButton();
@@ -69,38 +61,48 @@ public class AddShopPage extends JFrame {
         btnClose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddShopPage.this.setVisible(false);
-
+                GlassPane.closePopupLast();
             }
         });
-        panel.add(btnClose, "right, gapbottom 30, wrap");
+        add(btnClose, "right, gapbottom 30, wrap");
 
         // Label Shop Name
         lblSName = new JLabel("Shop Name");
         lblSName.setFont(Theme.latoFont);
-        panel.add(lblSName, "width 50%");
+        add(lblSName, "width 50%");
 
-        // Label Employee ID
-        lblEmpID = new JLabel("Employee ID");
-        lblEmpID.setFont(Theme.latoFont);
-        panel.add(lblEmpID, "width 50%, wrap");
+        // Label Employee
+        lblSelectEmp = new JLabel("Select Employee");
+        lblSelectEmp.setFont(Theme.latoFont);
+        add(lblSelectEmp, "width 50%, wrap");
 
         // Field Shop Name
         shopName = new WTextField();
         shopName.setRadius(16);
         shopName.setBgColor(Theme.TF_COLOR);
-        panel.add(shopName, "width 50%, height 50");
+        add(shopName, "width 50%, height 50");
 
-        // Field Employee ID
-        empID = new WTextField();
-        empID.setRadius(16);
-        empID.setBgColor(Theme.TF_COLOR);
-        panel.add(empID, "width 50%, height 50, wrap");
+        // Choose Employee
+        employee = new WTextField();
+        employee.setRadius(16);
+        employee.setBgColor(Theme.TF_COLOR);
+        employee.setEditable(false);
+        employee.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+                if (!focusGained) {
+                    focusGained = true; // this flag is used to ignore bug (running code twice) in focusGained()
+                    GlassPane.showPopup(new SearchEmployeePage());
+                    shopAddress.grabFocus();
+                }
+            }
+        });
+        add(employee, "width 50%, height 50, wrap");
 
         // Label Shop Address
         lblSAddress = new JLabel("Shop Address");
         lblSAddress.setFont(Theme.latoFont);
-        panel.add(lblSAddress, "gaptop 10, wrap");
+        add(lblSAddress, "gaptop 10, wrap");
 
         // Field Shop Address
         shopAddress = new JTextArea();
@@ -108,7 +110,13 @@ public class AddShopPage extends JFrame {
         shopAddress.setForeground(Theme.TEXT_COLOR);
         shopAddress.setColumns(10);
         shopAddress.setRows(10);
-        panel.add(shopAddress, "width 100%, height 200, span, wrap");
+        shopAddress.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                focusGained = false;
+            }
+        });
+        add(shopAddress, "width 100%, height 200, span, wrap");
 
         // Add Shop Button
         btnAddShop = new WButton("ADD SHOP");
@@ -121,29 +129,29 @@ public class AddShopPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Get Field Values
                 String name = shopName.getText();
-                String eID = empID.getText();
+                String eID = employee.getText();
                 String address = shopAddress.getText();
 
                 // Validating Fields
-                if (name.equals("") || eID.equals("") || address.equals("")) {
-                    JOptionPane.showMessageDialog(panel, "Please fill all details");
+                if (name.equals("") || employee.equals(null) || eID.equals("") || address.equals("")) {
+                    JOptionPane.showMessageDialog(getParent(), "Please fill all details");
                     return;
                 }
 
                 // Adding Shop Data to DB
                 int result = DBQueries.addNewShop(name, Integer.parseInt(eID), address);
-                if (result == Results.SUCCESS) {    // Shop Added
-                    JOptionPane.showMessageDialog(panel, "Shop added successfully");
+                if (result == Results.SUCCESS) { // Shop Added
+                    JOptionPane.showMessageDialog(getParent(), "Shop added successfully");
                     // resetting fields
                     shopName.setText("");
-                    empID.setText("");
+                    employee.setText("");
                     shopAddress.setText("");
-                } else {    // Failed to Add Shop
-                    JOptionPane.showMessageDialog(panel, "Sorry, Shop can't be added\nplease try again later");
+                } else { // Failed to Add Shop
+                    JOptionPane.showMessageDialog(getParent(), "Sorry, Shop can't be added\nplease try again later");
                 }
             }
         });
-        panel.add(btnAddShop, "height 40, span, right, gaptop 10");
+        add(btnAddShop, "height 40, span, right, gaptop 10");
     }
 
 }

@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import custom_classes.Theme;
 import custom_components.WButton;
 import custom_components.WTable;
+import custom_components.GlassPanePopup.GlassPane;
 import net.miginfocom.swing.MigLayout;
 
 public class Categories extends JPanel {
@@ -24,15 +25,8 @@ public class Categories extends JPanel {
     public Categories() {
         init();
         String[] cols = { "ID", "Name" };
-        String[] rows = {
-            "1",
-            "Electronics"
-        };
         DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
-        tableModel.addRow(rows);
         cateTable.setModel(tableModel);
-
-        System.out.println(tableModel.getDataVector());
     }
 
     private void init() {
@@ -48,7 +42,7 @@ public class Categories extends JPanel {
         btnAddNewCtg.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                System.out.println("Open Add Category Page");
+                GlassPane.showPopup(new AddCategoryPage());
             }
         });
 
