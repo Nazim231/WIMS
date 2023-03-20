@@ -22,7 +22,7 @@ public class AddCategoryPage extends RoundedCornerPanel {
     WTextField txtCategoryName;
 
     public AddCategoryPage() {
-        setLayout(new MigLayout("debug, fillx, insets 20, gapx 20, gapy 10"));
+        setLayout(new MigLayout("fillx, insets 20, gapx 20, gapy 10"));
 
         // Title
         lblTitle = new JLabel("Add Category");
@@ -52,7 +52,6 @@ public class AddCategoryPage extends RoundedCornerPanel {
         add(lblCategoryName, "wrap");
 
         txtCategoryName = new WTextField();
-        txtCategoryName.setBgColor(Theme.TF_COLOR);
         txtCategoryName.setRadius(16);
         txtCategoryName.setFont(Theme.latoFont);
         add(txtCategoryName, "width 100%, height 50");

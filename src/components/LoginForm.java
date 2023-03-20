@@ -78,8 +78,13 @@ public class LoginForm extends JPanel {
         formPanel.add(lblUsername, "wrap, gapy 10");
 
         txtUsername = new WTextField();
-        txtUsername.setBgColor(Theme.TF_COLOR);
         txtUsername.setRadius(16);
+        txtUsername.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtPassword.requestFocus();
+            }
+        });
         formPanel.add(txtUsername, "width 50%, height 40, wrap");
 
         // Password
@@ -90,7 +95,6 @@ public class LoginForm extends JPanel {
 
         txtPassword = new WPasswordField();
         txtPassword.setEchoChar('•');
-        txtPassword.setBgColor(Theme.TF_COLOR);
         txtPassword.setRadius(16);
         formPanel.add(txtPassword, "width 50%, height 40, wrap");
 
@@ -113,6 +117,7 @@ public class LoginForm extends JPanel {
 
     public void btnLoginActionListener(ActionListener actionListener) {
         btnLogin.addActionListener(actionListener);
+        txtPassword.addActionListener(actionListener);
     }
 
     @Override

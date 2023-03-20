@@ -116,7 +116,7 @@ public class DBQueries {
     }
 
     // function to get employees which aren't assigned to any shop
-    public static void getUnAssignedEmps(UnAssignedEmployees empDetails) {
+    public static void getUnAssignedEmps(String input, String filter, UnAssignedEmployees empDetails) {
 
         if (makeConnection() == Results.ERROR) {
             empDetails.getUnAssignedEmp(Results.ERROR, null);
@@ -124,17 +124,36 @@ public class DBQueries {
         }
 
         try {
-            String query = "SELECT id, name FROM users WHERE id NOT IN (SELECT emp_id FROM shops) AND role = 'emp'";
+            String filteredQuery;
+            if (filter.equals("Name"))
+                filteredQuery = "name LIKE '%" + input + "%'";
+            else
+                filteredQuery = "email = '" + input + "'";
+
+            String query = "SELECT id, name, email FROM users " +
+                    "WHERE id NOT IN (SELECT emp_id FROM shops) " +
+                    "AND role = 'emp' " +
+                    "AND " + filteredQuery +
+                    "ORDER BY " + filter;
             resultSet = statement.executeQuery(query);
+            boolean anyRowFetched = false;
             while (resultSet.next()) {
+                anyRowFetched = true;
                 empDetails.getUnAssignedEmp(
                         Results.SUCCESS,
-                        new EmployeeDetails(resultSet.getInt("id"), resultSet.getString("name")));
+                        new EmployeeDetails(
+                                resultSet.getInt("id"),
+                                resultSet.getString("name"),
+                                resultSet.getString("email")));
             }
+
+            if (anyRowFetched == false)
+                empDetails.getUnAssignedEmp(Results.NO_RECORD_FOUND, null);
+            closeConnection(true);
         } catch (SQLException ex) {
             System.out.println(ex);
             closeConnection(true);
-            empDetails.getUnAssignedEmp(Results.ERROR, null);
+            empDetails.getUnAssignedEmp(Results.FAILED, null);
         }
     }
 

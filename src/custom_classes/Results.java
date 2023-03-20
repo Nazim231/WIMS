@@ -5,5 +5,6 @@ public class Results {
     public static final int SUCCESS = 1;
     public static final int FAILED = 0;
     public static final int ERROR = -1;
+    public static final int NO_RECORD_FOUND = 404;
 
 }

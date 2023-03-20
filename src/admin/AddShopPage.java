@@ -25,11 +25,14 @@ import net.miginfocom.swing.MigLayout;
 
 public class AddShopPage extends RoundedCornerPanel {
 
-    boolean focusGained;
     JLabel lblTitle, lblSName, lblSAddress, lblSelectEmp;
     WTextField shopName, employee;
     JTextArea shopAddress;
     WButton btnClose, btnAddShop;
+
+    int empID;
+    String empName;
+    boolean focusGained;
 
     public AddShopPage() {
         init();
@@ -79,20 +82,24 @@ public class AddShopPage extends RoundedCornerPanel {
         // Field Shop Name
         shopName = new WTextField();
         shopName.setRadius(16);
-        shopName.setBgColor(Theme.TF_COLOR);
+        shopName.grabFocus();
         add(shopName, "width 50%, height 50");
 
         // Choose Employee
         employee = new WTextField();
         employee.setRadius(16);
-        employee.setBgColor(Theme.TF_COLOR);
         employee.setEditable(false);
         employee.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent fe) {
                 if (!focusGained) {
                     focusGained = true; // this flag is used to ignore bug (running code twice) in focusGained()
-                    GlassPane.showPopup(new SearchEmployeePage());
+                    GlassPane.showPopup(new SearchEmployeePage((id, name) -> {
+                        empID = Integer.parseInt(id);
+                        empName = name;
+                        if (!name.equals(""))
+                            employee.setText(name);
+                    }));
                     shopAddress.grabFocus();
                 }
             }
@@ -127,31 +134,40 @@ public class AddShopPage extends RoundedCornerPanel {
         btnAddShop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Get Field Values
-                String name = shopName.getText();
-                String eID = employee.getText();
-                String address = shopAddress.getText();
-
-                // Validating Fields
-                if (name.equals("") || employee.equals(null) || eID.equals("") || address.equals("")) {
-                    JOptionPane.showMessageDialog(getParent(), "Please fill all details");
-                    return;
-                }
-
-                // Adding Shop Data to DB
-                int result = DBQueries.addNewShop(name, Integer.parseInt(eID), address);
-                if (result == Results.SUCCESS) { // Shop Added
-                    JOptionPane.showMessageDialog(getParent(), "Shop added successfully");
-                    // resetting fields
-                    shopName.setText("");
-                    employee.setText("");
-                    shopAddress.setText("");
-                } else { // Failed to Add Shop
-                    JOptionPane.showMessageDialog(getParent(), "Sorry, Shop can't be added\nplease try again later");
-                }
+                addShopData();
             }
         });
         add(btnAddShop, "height 40, span, right, gaptop 10");
+    }
+
+    // function to add shop to Database
+    private void addShopData() {
+        // Get Field Values
+        String name = shopName.getText();
+        String address = shopAddress.getText();
+
+        // Validating Fields
+        if (name.equals("") || empName.equals("") || address.equals("") || empID == -1) {
+            JOptionPane.showMessageDialog(getParent(), "Please fill all details");
+            return;
+        }
+
+        // Adding Shop Data to DB
+        int result = DBQueries.addNewShop(name, empID, address);
+        if (result == Results.SUCCESS) {
+            // Shop Added
+            JOptionPane.showMessageDialog(getParent(), "Shop added successfully");
+            // resetting fields
+            shopName.setText("");
+            employee.setText("");
+            shopAddress.setText("");
+            empID = -1;
+            empName = "";
+            GlassPane.closePopupLast();
+        } else {
+            // Failed to Add Shop
+            JOptionPane.showMessageDialog(getParent(), "Sorry, Shop can't be added\nplease try again later");
+        }
     }
 
 }

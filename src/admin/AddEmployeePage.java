@@ -2,6 +2,8 @@ package admin;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Icon;
@@ -27,6 +29,7 @@ public class AddEmployeePage extends RoundedCornerPanel {
     JLabel lblTitle, lblEmpName, lblEmpEmail;
     WTextField txtEmpName, txtEmpEmail;
     WButton btnClose, btnAddEmp;
+    String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
 
     public AddEmployeePage() {
         init();
@@ -34,7 +37,7 @@ public class AddEmployeePage extends RoundedCornerPanel {
 
     private void init() {
         setBgColor(Theme.BG_COLOR);
-        setLayout(new MigLayout("debug, fillx, insets 20, gapx 20, gapy 10"));
+        setLayout(new MigLayout("fillx, insets 20, gapx 20, gapy 10"));
 
         // Title
         lblTitle = new JLabel("Employee Details");
@@ -71,13 +74,23 @@ public class AddEmployeePage extends RoundedCornerPanel {
         // Text Field Employee Name
         txtEmpName = new WTextField();
         txtEmpName.setRadius(16);
-        txtEmpName.setBgColor(Theme.TF_COLOR);
+        txtEmpName.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtEmpEmail.requestFocus();
+            }
+        });
         add(txtEmpName, "width 50%");
 
         // Text Field Employee Email
         txtEmpEmail = new WTextField();
         txtEmpEmail.setRadius(16);
-        txtEmpEmail.setBgColor(Theme.TF_COLOR);
+        txtEmpEmail.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addEmp();
+            }
+        });
         add(txtEmpEmail, "width 50%, wrap");
 
         // Add Employee Button
@@ -89,27 +102,42 @@ public class AddEmployeePage extends RoundedCornerPanel {
         btnAddEmp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                String name = txtEmpName.getText();
-                String email = txtEmpEmail.getText();
-
-                if (name.equals("") || email.equals("")) {
-                    JOptionPane.showMessageDialog(getParent(), "All Fields are required");
-                    return;
-                }
-
-                DBQueries.addEmployee(name, email, (result, password) -> {
-                    if (result != Results.FAILED && result != Results.ERROR) {
-                        JOptionPane.showMessageDialog(getParent(),
-                                "Employee Added Successfully\nEmployee ID: " + result + "\nPassword: " + password);
-                    } else {
-                        JOptionPane.showMessageDialog(getParent(), "Failed to Add Employee, please try again later");
-                    }
-                });
+                addEmp();
             }
         });
 
         add(btnAddEmp, "span, gaptop 10, right");
 
+    }
+
+    // function to add employee
+    private void addEmp() {
+        // Getting Field Values
+        String name = txtEmpName.getText();
+        String email = txtEmpEmail.getText();
+
+        // Validating Inputs
+        if (name.equals("") || email.equals("")) {
+            JOptionPane.showMessageDialog(getParent(), "All Fields are required");
+            return;
+        }
+
+        // Validating Email Address
+        Matcher matcher = Pattern.compile(regex).matcher(email);
+        if (!matcher.matches()) {
+            JOptionPane.showMessageDialog(getParent(), "Invalid Email Address");
+            return;
+        }
+
+        // Adding Employee to Database
+        DBQueries.addEmployee(name, email, (result, password) -> {
+            if (result != Results.FAILED && result != Results.ERROR) {
+                JOptionPane.showMessageDialog(getParent(),
+                        "Employee Added Successfully\nEmployee ID: " + result + "\nPassword: " + password);
+            } else {
+                JOptionPane.showMessageDialog(getParent(), "Failed to Add Employee, please try again later");
+            }
+        });
     }
 
 }
