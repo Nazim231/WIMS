@@ -1,24 +1,29 @@
 package admin;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 
+import custom_classes.DBQueries;
+import custom_classes.Results;
 import custom_classes.Theme;
-import custom_components.WTextField;
 import custom_components.GlassPanePopup.GlassPane;
+import custom_components.RoundedCornerPanel;
+import custom_components.WTextField;
+import custom_components.WButton;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
 import net.miginfocom.swing.MigLayout;
-import custom_components.RoundedCornerPanel;
-import custom_components.WButton;
 
 public class AddCategoryPage extends RoundedCornerPanel {
 
     JLabel lblTitle, lblCategoryName;
-    WButton btnClose;
+    WButton btnClose, btnAddCategory;
     WTextField txtCategoryName;
 
     public AddCategoryPage() {
@@ -54,8 +59,55 @@ public class AddCategoryPage extends RoundedCornerPanel {
         txtCategoryName = new WTextField();
         txtCategoryName.setRadius(16);
         txtCategoryName.setFont(Theme.latoFont);
-        add(txtCategoryName, "width 100%, height 50");
+        txtCategoryName.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addCategory();
+            }
+        });
+        add(txtCategoryName, "width 80%, height 50");
+
+        btnAddCategory = new WButton("Add");
+        btnAddCategory.setCornerRadius(16);
+        btnAddCategory.setBgColor(Theme.SECONDARY);
+        btnAddCategory.setFont(Theme.latoFont);
+        btnAddCategory.setForeground(Color.WHITE);
+        btnAddCategory.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addCategory();
+            };
+        });
+        add(btnAddCategory, "width 20%, height 50");
+
     }
 
+    // function to add category
+    private void addCategory() {
+        String cName = txtCategoryName.getText();
+
+        if (cName.equals("")) {
+            JOptionPane.showMessageDialog(getParent(), "Please Enter Category Name");
+            return;
+        }
+
+        // Adding Category to DB
+        int result = DBQueries.addCategory(cName);
+
+        String msg = "";
+        switch (result) {
+            case Results.SUCCESS:
+                msg = "Category Added Successfully";
+                break;
+            case Results.FAILED:
+                msg = "Failed to Add Category, please try again later";
+                break;
+            case Results.ERROR:
+                msg = "Error while communicating with Database, please try again later";
+                break;
+        }
+
+        JOptionPane.showMessageDialog(getParent(), msg);
+        GlassPane.closePopupLast();
+    }
 
 }

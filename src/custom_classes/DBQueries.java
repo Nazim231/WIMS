@@ -111,6 +111,33 @@ public class DBQueries {
 
     }
 
+    // function to get all categories
+    public static DefaultTableModel getCategoriesList() {
+
+        if (makeConnection() == Results.ERROR)
+            return null;
+
+        String cols[] = { "ID", "Name" };
+        DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
+
+        try {
+            String query = "SELECT * FROM categories";
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String rowData[] = { Integer.toString(id), name };
+                tableModel.addRow(rowData);
+            }
+            closeConnection(true);
+            return tableModel;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            closeConnection(true);
+            return null;
+        }
+    }
+
     public interface UnAssignedEmployees {
         void getUnAssignedEmp(int queryStatus, EmployeeDetails details);
     }
@@ -211,6 +238,34 @@ public class DBQueries {
             System.out.println(ex);
             closeConnection(false);
             queryStatus.employeeStatus(Results.ERROR, "");
+        }
+    }
+
+    // function to add new category to DB
+    public static int addCategory(String categoryName) {
+
+        if (makeConnection() == Results.ERROR) {
+            return Results.ERROR;
+        }
+
+        try {
+            String query = "INSERT INTO categories(name) VALUES(?)";
+            pStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            pStatement.setString(1, categoryName);
+            pStatement.addBatch();
+            pStatement.executeBatch(); // executing query
+            resultSet = pStatement.getGeneratedKeys(); // fetching PRIMARY KEY value (ID) of Category
+            if (resultSet.next()) { // Category Added Successfully
+                closeConnection(true);
+                return Results.SUCCESS;
+            } else {
+                closeConnection(true);
+                return Results.FAILED;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            closeConnection(true);
+            return Results.ERROR;
         }
     }
 

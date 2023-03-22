@@ -52,6 +52,7 @@ public class Main extends JFrame {
             adminComponents.add(new Shops());
             adminComponents.add(new Employees());
             adminComponents.add(new Categories());
+            adminComponents.add(new Stocks());
         } else { // Employee Panel
             System.out.println("Other");
         }

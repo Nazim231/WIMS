@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import custom_classes.DBQueries;
 import custom_classes.Theme;
 import custom_components.WButton;
 import custom_components.WTable;
@@ -24,9 +25,15 @@ public class Categories extends JPanel {
 
     public Categories() {
         init();
-        String[] cols = { "ID", "Name" };
-        DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
-        cateTable.setModel(tableModel);
+        // Setting Categories List to Categories Table
+        DefaultTableModel tableModel = DBQueries.getCategoriesList();
+        if (tableModel != null) {
+            cateTable.setModel(tableModel);
+        } else {
+            String[] cols = { "ID", "Name" };
+            tableModel = new DefaultTableModel(cols, 0);
+            cateTable.setModel(tableModel);
+        }
     }
 
     private void init() {
