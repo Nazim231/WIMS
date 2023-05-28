@@ -30,7 +30,7 @@ public class Employees extends JPanel {
 
     public Employees() {
         init();
-        // Setting Employees List to Employee Table
+        // Adding Employees List to Employee Table
         DefaultTableModel tableModel = DBQueries.getEmployeesList();
         if (tableModel != null)
             empTable.setModel(tableModel);

@@ -42,11 +42,6 @@ public class AddShopPage extends RoundedCornerPanel {
         setBgColor(Theme.BG_COLOR);
         setLayout(new MigLayout("insets 20, gapx 20, gapy 10"));
 
-        /*
-         * => TODO : Shop CAN'T be added if no employee is selected to manage the shop
-         * => TODO : Search Functionality for Employee
-         */
-
         // Label Title
         lblTitle = new JLabel("Add New Shop");
         lblTitle.setFont(Theme.poppinsSemiboldTitleFont);
