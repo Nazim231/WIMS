@@ -25,6 +25,9 @@ public class DBQueries {
     private static PreparedStatement pStatement;
     private static ResultSet resultSet;
 
+    // Logged In User Profile Details
+    public static UserDetails currentUser;
+
     // Login User
     public static UserDetails loginUser(String username, String password) {
 
@@ -38,12 +41,16 @@ public class DBQueries {
             if (resultSet.next()) {
                 // logged in successfully
                 String role = resultSet.getString("role");
+                String name = resultSet.getString("name");
                 closeConnection(true);
-                return new UserDetails(Results.SUCCESS, role);
+                
+                currentUser = new UserDetails(Results.SUCCESS, name, role);
+                return currentUser;
             } else {
                 // username or password is incorrect
                 closeConnection(true);
-                return new UserDetails(Results.FAILED);
+                currentUser = new UserDetails(Results.FAILED);
+                return currentUser;
             }
         } catch (SQLException ex) {
             // error occured while executing the query

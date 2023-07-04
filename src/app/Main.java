@@ -4,23 +4,26 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import admin.*;
 import components.AdminNavBar;
+import components.EmployeeNavBar;
 import components.MainPanel;
+import custom_classes.DBQueries;
 import custom_classes.Theme;
 import custom_components.GlassPanePopup.GlassPane;
+import employee.*;
+import employee.Dashboard;
 import net.miginfocom.swing.MigLayout;
 
 public class Main extends JFrame {
 
-    String role;
     static MainPanel panel;
-    static ArrayList<JPanel> adminComponents = new ArrayList<>(); // To store all Admin Menu Items Panels
-    
-    public Main(String role) {
-        this.role = role;
+    static ArrayList<JPanel> navBarComponents = new ArrayList<>(); // To store all Menu Items Panels
+
+    public Main() {
         initMain();
         GlassPane.install(this);
     }
@@ -42,51 +45,47 @@ public class Main extends JFrame {
         add(bg);
 
         // Setting the Layout based on the User Role
-        if (role.equals("admin")) { // Admin Panel
+        String userRole = DBQueries.currentUser.getRole();
+        if (userRole.equals("admin")) { // Admin Panel
             AdminNavBar navBar = new AdminNavBar();
             navBar.initMoving(Main.this); // Dragging Functionality
             bg.add(navBar, "width 260, height 100%");
 
             // Adding Admin Menu Panel(s)
-            adminComponents.add(new Dashboard());
-            adminComponents.add(new Shops());
-            adminComponents.add(new Employees());
-            adminComponents.add(new Categories());
-            adminComponents.add(new Stocks());
-        } else { // Employee Panel
-            System.out.println("Other");
+            navBarComponents.add(new Dashboard());
+            navBarComponents.add(new Shops());
+            navBarComponents.add(new Employees());
+            navBarComponents.add(new Categories());
+            navBarComponents.add(new Stocks());
+        } else if (userRole.equals("emp")) { // Employee Panel
+            EmployeeNavBar navBar = new EmployeeNavBar();
+            navBar.initMoving(Main.this);   // Dragging Functionality
+            bg.add(navBar, "width 260, height 100%");
+
+            // Adding Employee Menu Panel(s)
+            navBarComponents.add(new employee.Dashboard());
+            // navBarComponents.add(new Stocks());
+            // navBarComponents.add(new Stocks());
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Error in fetching User Profile, kindly log in again");
+            setVisible(false);
+            new Login().setVisible(true);
         }
 
         // Right Panel
         panel = new MainPanel();
         bg.add(panel, "width 100% - 260, height 100%");
-        panel.add(adminComponents.get(0), "width 100%, height 100%");
+        panel.add(navBarComponents.get(0), "width 100%, height 100%");
     }
-
-    public static void main(String args[]) {
-
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if (info.getName().equals("Nimbus")) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            System.out.println("Fook & Feel Exception: " + ex);
-        }
-
-        new Main("admin").setVisible(true);
-    }
-
 
     // Change frame by selecting Menu Item from admin/employee panel.
     public static void changeItem(int index) {
-        if (index >= adminComponents.size())
+        if (index >= navBarComponents.size())
             return;
         
         panel.remove(panel.getComponent(0)); // Removing Current Panel
-        panel.add(adminComponents.get(index), "width 100%, height 100%");
+        panel.add(navBarComponents.get(index), "width 100%, height 100%");
         panel.revalidate();
     }
 }

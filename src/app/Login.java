@@ -96,7 +96,7 @@ public class Login extends javax.swing.JFrame {
                 switch (user.getLoginStatus()) {
                     case Results.SUCCESS:
                         context.setVisible(false);
-                        new Main(user.getRole()).setVisible(true);
+                        new Main().setVisible(true);
                         break;
                     case Results.FAILED:
                         JOptionPane.showMessageDialog(context, "Login Failed,\nKindly check your credentials");

@@ -94,7 +94,7 @@ public class AdminNavBar extends JPanel {
 
     }
 
-    // Function to change the location of App by draggin it
+    // Function to change the location of App by dragging it
     public void initMoving(JFrame frame) {
         header.addMouseListener(new MouseAdapter() {
             @Override
@@ -113,7 +113,7 @@ public class AdminNavBar extends JPanel {
     }
 
 
-    // Graident Background
+    // Gradient Background
     @Override
     protected void paintChildren(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;

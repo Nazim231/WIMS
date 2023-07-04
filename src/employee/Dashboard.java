@@ -1,9 +1,6 @@
-package admin;
+package employee;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,14 +15,14 @@ public class Dashboard extends JPanel {
     MigLayout layout;
     JPanel headerPanel, topPanel, gap;
     JLabel lblUserName;
-    CounterSection panelProductSold, panelProfitEarned, panelRevenueEarned;
+    CounterSection soldProducts, newCustomers, salesAmt;
 
     public Dashboard() {
         initDashboard();
     }
 
     private void initDashboard() {
-        // JPanel properties
+        // JPanel Properties
         layout = new MigLayout();
         setLayout(layout);
         setOpaque(false);
@@ -39,7 +36,6 @@ public class Dashboard extends JPanel {
         lblUserName.setFont(Theme.latoFont);
         lblUserName.setForeground(Color.BLACK);
         headerPanel.add(lblUserName);
-        // TODO : Add Profile Icon
 
         add(headerPanel, "wrap, al right center");
         // --- END : Header ---
@@ -48,43 +44,35 @@ public class Dashboard extends JPanel {
         topPanel = new JPanel(new MigLayout("insets 0"));
         topPanel.setOpaque(false);
 
-        // Monthly Product Sold
-        panelProductSold = new CounterSection("0", "Monthly Products Sold", "/icons/ic_stock_blue.png", Theme.SECONDARY);
-        topPanel.add(panelProductSold, "width 32%, height 100%");
-        // --- END : Monthly Product Sold ---
+        // Current Month Sold Products
+        soldProducts = new CounterSection("0", "Current Month Sell", "/icons/ic_stock_blue.png", Theme.SECONDARY);
+        topPanel.add(soldProducts, "width 32%, height 100%");
+        // --- END : Current Month Sold Products ---
 
         // Gap
         gap = new JPanel();
         gap.setOpaque(false);
         topPanel.add(gap, "width 2%");
 
-        // Monthly Profit Earned
-        panelProfitEarned = new CounterSection("0", "Monthly Profit Earned", "/icons/ic_profit.png", Theme.SUCCESS_COLOR);
-        topPanel.add(panelProfitEarned, "width 32%, height 100%");
-        // --- END : Monthly Profit Earned ---
+        // New Customers
+        newCustomers = new CounterSection("0", "New Customers", "", Theme.WARNING_COLOR);
+        topPanel.add(newCustomers, "width 32%, height 100%");
+        // --- END : New Customers ---
 
         // Gap
         gap = new JPanel();
         gap.setOpaque(false);
         topPanel.add(gap, "width 2%");
 
-        // Monthly Revenue Earned
-        panelRevenueEarned = new CounterSection("0", "Monthly Revenue Earned", "/icons/ic_revenue.png", Theme.WARNING_COLOR);
-        topPanel.add(panelRevenueEarned, "width 32%, height 100%");
-        // --- END : Monthly Revenue Earned
+        // Sales Amount
+        salesAmt = new CounterSection("0", "Current Month Sales Amount", "", Theme.SUCCESS_COLOR);
+        topPanel.add(salesAmt, "width 32%, height 100%");
+        // --- END : Sales Amount ---
 
         add(topPanel, "width 100%, height 150, gaptop 10");
         // --- END : Top Panel ---
 
-    }
 
-    @Override
-    protected void paintChildren(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setPaint(Theme.TRANSPARENT_COLOR);
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 16, 16);
-        g2d.fillRect(0, 0, getWidth() - 16, getHeight());
-        super.paintChildren(g);
+
     }
 }
