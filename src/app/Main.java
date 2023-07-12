@@ -14,14 +14,13 @@ import components.MainPanel;
 import custom_classes.DBQueries;
 import custom_classes.Theme;
 import custom_components.GlassPanePopup.GlassPane;
-import employee.*;
-import employee.Dashboard;
 import net.miginfocom.swing.MigLayout;
 
 public class Main extends JFrame {
 
     static MainPanel panel;
-    static ArrayList<JPanel> navBarComponents = new ArrayList<>(); // To store all Menu Items Panels
+    // To store all Menu Items Panels
+    static ArrayList<JPanel> navBarComponents = new ArrayList<>();
 
     public Main() {
         initMain();
@@ -64,7 +63,8 @@ public class Main extends JFrame {
 
             // Adding Employee Menu Panel(s)
             navBarComponents.add(new employee.Dashboard());
-            // navBarComponents.add(new Stocks());
+            navBarComponents.add(new employee.SellProduct());
+            navBarComponents.add(new employee.Stocks());
             // navBarComponents.add(new Stocks());
 
         } else {
@@ -83,9 +83,14 @@ public class Main extends JFrame {
     public static void changeItem(int index) {
         if (index >= navBarComponents.size())
             return;
-        
-        panel.remove(panel.getComponent(0)); // Removing Current Panel
-        panel.add(navBarComponents.get(index), "width 100%, height 100%");
+        setScreen(navBarComponents.get(index));
+    }
+
+    // set the current active/selected page on the frame
+    public static void setScreen(JPanel screen) {
+        panel.remove(panel.getComponent(0));
+        panel.add(screen, "width 100%, height 100%");
         panel.revalidate();
     }
+    
 }

@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import app.Main;
 import custom_classes.DBQueries;
 import custom_classes.Theme;
 import custom_components.WButton;
@@ -76,7 +79,20 @@ public class Shops extends JPanel {
 
         shopsTable = new WTable();
         shopsTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        shopsTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 1) {
+                    int row = shopsTable.getSelectedRow();
+                    int shopId = Integer.parseInt(shopsTable.getValueAt(row, 0).toString());
+                    ShopDetailsPage shopDetailsPage = new ShopDetailsPage(shopId);
+                    Main.setScreen(shopDetailsPage);
+                }
+            }
+        });
         JScrollPane tableContainer = new JScrollPane(shopsTable);
+        tableContainer.getViewport().setBackground(Theme.BG_COLOR);
+        tableContainer.setBorder(null);
         add(tableContainer, "width 100%, height 250, wrap");
     }
 

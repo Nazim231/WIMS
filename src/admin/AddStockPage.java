@@ -182,6 +182,7 @@ public class AddStockPage extends RoundedCornerPanel {
 
         if (result == Results.SUCCESS) {
             showMsg("Stock Added Successfully");
+            Stocks.setTableData();
             GlassPane.closePopupLast();
         } else if (result == Results.ERROR) {
             showMsg("An Error Occured,\nUnable to add stock, please try again");

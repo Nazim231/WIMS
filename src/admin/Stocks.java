@@ -3,12 +3,15 @@ package admin;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import app.Main;
 import custom_classes.DBQueries;
 import custom_classes.Theme;
 import custom_components.WButton;
@@ -20,20 +23,11 @@ public class Stocks extends JPanel {
 
     JLabel lblTitle;
     WButton btnAddStock;
-    WTable tableStocks;
+    private static WTable tableStocks;
 
     public Stocks() {
         init();
-        // Adding Employees List to Employee Table
-        DefaultTableModel tableModel = DBQueries.getStocksList();
-        if (tableModel != null)
-            tableStocks.setModel(tableModel);
-        else {
-            String[] cols = { "ID", "Name", "Category", "Brand", "MRP", "Price", "Quantity"};
-            tableModel = new DefaultTableModel(cols, 0);
-            tableStocks.setModel(tableModel);
-            tableStocks.revalidate();
-        }
+       setTableData();
     }
 
     private void init() {
@@ -62,8 +56,33 @@ public class Stocks extends JPanel {
 
         // Stocks Table
         tableStocks = new WTable();
+        tableStocks.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 1) {
+                    int row = tableStocks.getSelectedRow();
+                    int id = Integer.parseInt(tableStocks.getValueAt(row, 0).toString());
+                    ProductDetailsPage prodDetailsPage = new ProductDetailsPage(id);
+                    Main.setScreen(prodDetailsPage);
+                }
+            }
+        });
         JScrollPane tableContainer = new JScrollPane(tableStocks);
-        add(tableContainer, "width 100%, wrap");
+        tableContainer.getViewport().setBackground(Theme.BG_COLOR);
+        tableContainer.setBorder(null);
+        add(tableContainer, "width 100%, gaptop 8, wrap");
     }
 
+    public static void setTableData() {
+         // Adding Stocks List to Stocks Table
+        DefaultTableModel tableModel = DBQueries.getStocksList();
+        if (tableModel != null)
+            tableStocks.setModel(tableModel);
+        else {
+            String[] cols = { "ID", "Name", "Category", "Brand", "MRP", "Price", "Quantity" };
+            tableModel = new DefaultTableModel(cols, 0);
+            tableStocks.setModel(tableModel);
+            tableStocks.revalidate();
+        }
+    }
 }

@@ -13,6 +13,7 @@ public class WButton extends JButton {
     boolean hover;
     Color bgColor, borderColor, hoverColor, rippleColor;
     int cornerRadius = 16, borderWidth = 0;
+    int paddingX = 20, paddingY = 10;
 
     // default color values
     final Color BG_COLOR = Color.WHITE;
@@ -32,7 +33,7 @@ public class WButton extends JButton {
 
     // Initializing Button
     private void init() {
-        setBorder(new EmptyBorder(10, 20, 10, 20));
+        setBorder(new EmptyBorder(paddingY, paddingX, paddingY, paddingX));
         setBgColor(BG_COLOR);
         setBorderColor(BORDER_COLOR);
         setHoverColor(HOVER_COLOR);
@@ -82,6 +83,11 @@ public class WButton extends JButton {
         return rippleColor;
     }
 
+    public void setPadding(int paddingX, int paddingY) {
+        this.paddingX = paddingX;
+        this.paddingY = paddingY;
+        setBorder(new EmptyBorder(paddingY, paddingX, paddingY, paddingX));
+    }
     public void setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
     }

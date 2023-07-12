@@ -5,7 +5,6 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import custom_classes.DBQueries;
 import custom_classes.Theme;
 import custom_components.CounterSection;
 import net.miginfocom.swing.MigLayout;
@@ -31,7 +30,8 @@ public class Dashboard extends JPanel {
         headerPanel = new JPanel(new MigLayout("gap 10"));
         headerPanel.setOpaque(false);
         // User Name
-        String userName = DBQueries.currentUser.getName();
+        // String userName = DBQueries.currentUser.getName();
+        String userName = "John Doe";
         lblUserName = new JLabel("Hello, " + userName);
         lblUserName.setFont(Theme.latoFont);
         lblUserName.setForeground(Color.BLACK);

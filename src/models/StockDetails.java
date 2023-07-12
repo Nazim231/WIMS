@@ -1,11 +1,12 @@
 package models;
 
 public class StockDetails {
-    
-    String prodName, brandName;
-    int categoryId, mrp, sellingPrice, costPrice, qty;
 
-    public StockDetails(String prodName, String brandName, int categoryId, int mrp, int sellingPrice, int costPrice, int qty) {
+    String prodName, brandName, categoryName, lastRefillDate;
+    int prodId, categoryId, mrp, sellingPrice, costPrice, qty;
+
+    public StockDetails(String prodName, String brandName, int categoryId, int mrp, int sellingPrice, int costPrice,
+            int qty) {
         this.prodName = prodName;
         this.brandName = brandName;
         this.categoryId = categoryId;
@@ -13,6 +14,21 @@ public class StockDetails {
         this.sellingPrice = sellingPrice;
         this.costPrice = costPrice;
         this.qty = qty;
+    }
+
+    public StockDetails(String prodName, String categoryName, int mrp, int sellingPrice, int costPrice, int qty,
+            String lastRefillDate) {
+        this.prodName = prodName;
+        this.categoryName = categoryName;
+        this.mrp = mrp;
+        this.sellingPrice = sellingPrice;
+        this.costPrice = costPrice;
+        this.qty = qty;
+        this.lastRefillDate = lastRefillDate;
+    }
+
+    public void setProdId(int prodId) {
+        this.prodId = prodId;
     }
 
     public void setProdName(String prodName) {
@@ -43,6 +59,10 @@ public class StockDetails {
         this.qty = qty;
     }
 
+    public int getProdId() {
+        return prodId;
+    }
+
     public String getProdName() {
         return prodName;
     }
@@ -53,6 +73,10 @@ public class StockDetails {
 
     public int getCategoryId() {
         return categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
     }
 
     public int getMrp() {
@@ -71,4 +95,8 @@ public class StockDetails {
         return qty;
     }
 
+    public String getLastRefillDate() {
+        return lastRefillDate;
+    }
+    
 }

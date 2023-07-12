@@ -14,6 +14,7 @@ public class WTable extends JTable {
         setRowHeight(40);
         setFont(Theme.latoFont);
         setForeground(Theme.MUTED_TEXT_COLOR);
+        setSelectionBackground(Theme.PRIMARY);
     }
     
 }

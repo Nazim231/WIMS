@@ -70,7 +70,8 @@ public class Employees extends JPanel {
         empTable = new WTable();
         empTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         JScrollPane tableContainer = new JScrollPane(empTable);
-        // tableContainer.setBorder(null);
+        tableContainer.getViewport().setBackground(Theme.BG_COLOR);
+        tableContainer.setBorder(null);
         add(tableContainer, "width 100%, height 250, wrap");
 
     }

@@ -64,7 +64,9 @@ public class Categories extends JPanel {
         // Categories Table
         cateTable = new WTable();
         JScrollPane tableContainer = new JScrollPane(cateTable);
-        add(tableContainer, "width 100%, wrap");
+        tableContainer.getViewport().setBackground(Theme.BG_COLOR);
+        tableContainer.setBorder(null);
+        add(tableContainer, "width 100%, height 100%, wrap");
 
     }
 

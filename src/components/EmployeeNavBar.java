@@ -60,7 +60,7 @@ public class EmployeeNavBar extends JPanel {
 
         menu = new MenuList();
         menu.addItem(new MenuItemModel("Dashboard", "/icons/ic_dashboard.png"));
-        menu.addItem(new MenuItemModel("Sell Product", ""));
+        menu.addItem(new MenuItemModel("Sell Product", "/icons/ic_dollar.png"));
         menu.addItem(new MenuItemModel("Stocks", "/icons/ic_stock.png"));
 
         menu.addListSelectionListener(new ListSelectionListener() {
